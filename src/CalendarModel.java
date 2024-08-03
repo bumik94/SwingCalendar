@@ -14,8 +14,8 @@ public class CalendarModel {
     private static final DateFormat df          = DateFormat.getDateInstance(DateFormat.DATE_FIELD);
     private static final String[]   monthNames  = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
 
-    private final int currentYear = getCurrentYear();
-    private final int currentMonth = getCurrentMonth();
+    private int currentYear = getCurrentYear();
+    private int currentMonth = getCurrentMonth();
 
     public CalendarModel() {
         // Initialize Calendar to start on Monday of the first week in the current month
@@ -37,6 +37,10 @@ public class CalendarModel {
         return calendar.get(Calendar.MONTH);
     }
 
+    public int getCurrentDay() {
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
     public JPanel getCalendarGrid() {
         JPanel grid = new JPanel(new GridLayout(0, 7));
         // Row here serves a simple purpose to segment a month into full weeks
@@ -45,39 +49,40 @@ public class CalendarModel {
         while (nextRow) {
             for (int day = 0; day < 7; day++) {
                 // Creates new button with name derived from the current day iteration
-                JButton dayButton = new JButton(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+                JButton dayButton = new JButton(String.valueOf(getCurrentDay()));
                 // Disables button that is not within the current month
-                dayButton.setEnabled(calendar.get(Calendar.MONTH) == currentMonth);
+                dayButton.setEnabled(getCurrentMonth() == currentMonth);
                 grid.add(dayButton);
                 // Updates calendar to the next day
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
             }
             // Checks if next month has been reached in the current week iteration
-            if ((calendar.get(Calendar.MONTH) > currentMonth) || (calendar.get(Calendar.YEAR) != currentYear)) {
+            if (getCurrentMonth() != currentMonth) {
                 nextRow = false;
             }
         }
         return grid;
     }
 
-    JLabel getMonthLabel() {
-        JLabel monthLabel = new JLabel(monthNames[getCurrentMonth()]);
+    private JLabel getMonthLabel() {
+        JLabel monthLabel = new JLabel(monthNames[getCurrentMonth() - 1]);
         monthLabel.setPreferredSize(new Dimension(0, 25));
         monthLabel.setAlignmentX(CENTER_ALIGNMENT);
         return monthLabel;
     }
-    JLabel getYearLabel() {
+    private JLabel getYearLabel() {
         JLabel yearLabel = new JLabel(String.valueOf(getCurrentYear()));
         yearLabel.setPreferredSize(new Dimension(0, 25));
         yearLabel.setAlignmentX(CENTER_ALIGNMENT);
         return yearLabel;
     }
 
-    JPanel getCalendarHeader() {
+    public JPanel getCalendarHeader() {
         JPanel header = new JPanel();
         header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
         header.add(Box.createVerticalGlue());
         header.add(getYearLabel());
+        header.add(new JSeparator(SwingConstants.HORIZONTAL));
         header.add(getMonthLabel());
         return header;
     }

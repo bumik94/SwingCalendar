@@ -4,12 +4,13 @@ import javax.swing.*;
 public class CalendarWindow {
 
     private static void createAndShowGUI() {
-        CalendarModel calendarModel = new CalendarModel();
         // Create and set up the window.
         JFrame frame = new JFrame("Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
+        // Get Calendar components
+        CalendarModel calendarModel = new CalendarModel();
         JPanel calendarGrid = calendarModel.getCalendarGrid();
         JPanel calendarHeader = calendarModel.getCalendarHeader();
 
