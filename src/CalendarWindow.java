@@ -5,18 +5,20 @@ public class CalendarWindow {
 
     private static void createAndShowGUI() {
         // Create and set up the window.
-        JFrame frame = new JFrame("Swing");
+        JFrame frame = new JFrame("Calendar");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
+        frame.add(new CalendarPanel(), BorderLayout.CENTER);
+
         // Get Calendar components
-        CalendarModel calendarModel = new CalendarModel();
-        JPanel calendarGrid = calendarModel.getCalendarGrid();
-        JPanel calendarHeader = calendarModel.getCalendarHeader();
+//        CalendarModel calendarModel = new CalendarModel();
+//        JPanel calendarGrid = calendarModel.getCalendarGrid();
+//        JPanel calendarHeader = calendarModel.getCalendarHeader();
 
         // Add components to the window
-        frame.getContentPane().add(calendarHeader, BorderLayout.PAGE_START);
-        frame.getContentPane().add(calendarGrid, BorderLayout.CENTER);
+//        frame.getContentPane().add(calendarHeader, BorderLayout.PAGE_START);
+//        frame.getContentPane().add(calendarGrid, BorderLayout.CENTER);
 
         // Lay out components and set visibility
         frame.pack();
